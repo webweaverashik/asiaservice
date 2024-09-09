@@ -1,5 +1,5 @@
 <footer class="main-footer">
-    <strong>Credits &reg; {{ now()->year }} <a href="https://www.facebook.com/webweaverashik/" target="_blank">Ashikur Rahman</a></strong>
+    <strong>Developed by &trade; <a href="https://www.facebook.com/webweaverashik/" target="_blank">Ashikur Rahman</a></strong>
     <div class="float-right d-none d-sm-inline-block">
       <b>&nbsp;&nbsp;&nbsp;&nbsp;Version</b> 2.1.5
     </div>

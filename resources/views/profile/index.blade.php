@@ -27,7 +27,7 @@
             <div class="container-fluid">
                 <!-- Main row -->
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-xl-6">
                         <form action="{{ url('profile/edit') }}" method="POST">
                             @csrf
                             @method('PUT')

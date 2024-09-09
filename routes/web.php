@@ -37,7 +37,7 @@ Route::controller(AuthenticateController::class)->group(function () {
     });
 
     Route::get('/upload', [FileUploadController::class, 'index']);
-    Route::post('/upload', [FileUploadController::class, 'store']);
+    Route::post('/upload/create', [FileUploadController::class, 'store']);
     
     Route::get('/activity', [ActivityLogController::class, 'index']);
     

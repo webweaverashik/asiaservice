@@ -27,7 +27,7 @@
         <div class="container-fluid">
           <!-- Main row -->
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-xl-6">
               <!-- general form elements -->
               <div class="card card-info">
                 <div class="card-header">
@@ -36,19 +36,22 @@
                 <!-- /.card-header -->
   
                 <!-- form start -->
-                <form action="{{ url('upload') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ url('upload/create') }}" method="post" enctype="multipart/form-data">
                   @csrf
+
                   <div class="card-body">
                     <div class="form-group">
-                      <label for="pb_reference">Reference No.</label>
-                      <input type="text" class="form-control" id="pb_reference" name="pb_reference" placeholder="Enter any reference no." required>
+                      <label for="pb_reference">Reference No.</label><span class="text-danger">*</span>
+                      <input type="text" class="form-control @error('pb_reference') border-danger @enderror" id="pb_reference" name="pb_reference" placeholder="Enter any reference no." >
+                      @error('pb_reference') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">
-                      <label for="csv_file">CSV File Upload</label>
+                      <label for="csv_file">CSV File Upload</label><span class="text-danger">*</span>
                       <div class="input-group">
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="csv_file" name="csv_file" accept=".csv" required>
+                          <input type="file" class="custom-file-input @error('csv_file') border-danger @enderror" id="csv_file" name="csv_file" accept=".csv">
                           <label class="custom-file-label" for="csv_file">Choose file</label>
+                          @error('csv_file') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                       </div>
                     </div>
