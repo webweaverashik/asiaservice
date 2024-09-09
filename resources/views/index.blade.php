@@ -69,7 +69,7 @@
                       <td class="d-none">{{ $report->file_url }}</td>
                       <td>{{ $report->pin_count }}</td>
                       <td>{{ $report->balance }}</td>
-                      <td>{{ \Carbon\Carbon::parse($report->created_at)->format('d-m-Y H:i:s') }}</td>
+                      <td>{{ \Carbon\Carbon::parse($report->created_at)->format('d-M-Y, h:i:s A') }}</td>
                       <td class="d-none">{{ \Carbon\Carbon::parse($report->created_at)->format('Y-m-d') }}</td>
                       <td>
                           <form action="pdf-gen.php" method="post">
