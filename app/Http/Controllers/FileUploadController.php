@@ -6,6 +6,7 @@ use App\Models\FileUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class FileUploadController extends Controller
 {
@@ -32,48 +33,97 @@ class FileUploadController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+    //     // Validate the form input
+    //     $request->validate([
+    //         'pb_reference' => 'required|string',
+    //         'csv_file' => 'required|mimes:csv,txt|max:200', // CSV or plain text validation
+    //     ],
+    //     [
+    //         'pb_reference.required' => 'Reference no. is required',
+    //         'csv_file.required' => 'CSV file is required',
+    //     ]);
+
+    //     // Check if the file is present
+    //     if ($request->hasFile('csv_file')) {
+
+    //         $file = $request->file('csv_file');
+    //         $extension = $file->getClientOriginalExtension();
+
+    //         $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) .  '_' . date('d_M_Y_h_i_s_A') . '.' . $extension;
+
+    //         $path = 'uploads/csv/' . date('M_Y') . '/';
+
+    //         $file->move($path, $filename);
+
+
+    //         FileUpload::create([
+    //             'reference_key' => $request->pb_reference,
+    //             'csv_name' => $file->getClientOriginalName(),
+    //             'file_url' => $path.$filename,
+    //             'pin_count' => $request->memorandum_no,
+    //             'balance' => $request->sent_date,
+    //         ]);
+
+    //         // Optional: Return success response
+    //         return back()->with('success', 'File uploaded successfully.');
+    //     } else {
+    //         return back()->with('error', 'No file uploaded.');
+    //     }
+    // }
     public function store(Request $request)
-    {
-        // return $request;
+{
+    // Validate the form input
+    $request->validate([
+        'pb_reference' => 'required|string',
+        'csv_file' => 'required|mimes:csv,txt|max:200', // CSV or plain text validation
+    ], [
+        'pb_reference.required' => 'Reference no. is required',
+        'csv_file.required' => 'CSV file is required',
+    ]);
 
-        $request->validate([
-            'pb_reference' => 'required',
-            'csv_file' => 'required|mimes:csv',
-        ],
-        [
-            'pb_reference.required' => 'Reference no. is required',
-            'csv_file.required' => 'CSV file is required',
-            'csv_file.mimes' => 'Upload only .csv file',
-        ]);
+    // Check if the file is present
+    if ($request->hasFile('csv_file')) {
+        $file = $request->file('csv_file');
+        $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . date('d_M_Y_h_i_s_A') . '.' . $file->getClientOriginalExtension();
+        
+        // Save the file in the 'public/uploads/csv/' folder
+        $path = 'uploads/csv/' . date('M_Y') . '/';
+        $file->move(public_path($path), $filename);
 
+        // Read the CSV file using the correct path
+        $filePath = public_path($path . $filename);
+        $csvData = array_map('str_getcsv', file($filePath));
 
-        if ($request->has('csv_file')) {
-            $file = $request->file('csv_file');
-            $extension = $file->getClientOriginalExtension();
+        // Skip the first 16 rows and remove the last 2 rows
+        $csvData = array_slice($csvData, 16, -1);
 
-            $filename = 'pinbatch_'.date('dmY_His').'.'.$extension;
+        // Get the row count
+        $rowCount = count($csvData);
 
-            $path = 'uploads/csv/'.date('M-Y').'/';
-            // $file->move($path, $filename);
-
-        } else {
-            $path = null;
-            $filename = null;
+        // Extract the 4th column value
+        if ($rowCount > 0) {
+            $fourthColumnValue = $csvData[0][3]; // Get 4th column value (assuming all rows have the same value)
         }
 
-        // FileUpload::create([
-        //     'reference_key' => $request->pb_reference,
-        //     'csv_name' => $request->received_date,
-        //     'file_url' => $path.$filename,
-        //     'pin_count' => $request->memorandum_no,
-        //     'balance' => $request->sent_date,
-        // ]);
 
-        $file->move($path, $filename);
-
-
-        return redirect('/upload')->with('success', 'PDF generated successfully. Please, print the file in duplex mode.');
+        FileUpload::create([
+            'reference_key' => $request->pb_reference,
+            'csv_name' => $file->getClientOriginalName(),
+            'file_url' => $path.$filename,
+            'pin_count' => $rowCount,
+            'balance' => $fourthColumnValue,
+        ]);
+        
+        // Return success response
+        return back()->with('success', 'File uploaded successfully. Row count: ' . $rowCount . '. 4th column value: ' . $fourthColumnValue);
+    } else {
+        return back()->with('error', 'No file uploaded.');
     }
+}
+
+
 
     /**
      * Display the specified resource.

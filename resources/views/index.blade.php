@@ -91,7 +91,7 @@
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>SL</th>
+                        <th>SL.</th>
                         <th>Reference</th>
                         <th>File Name</th>
                         <th class="d-none">File URL</th>

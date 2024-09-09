@@ -36,11 +36,12 @@ Route::controller(AuthenticateController::class)->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index']);
     });
 
-    Route::get('/upload', [FileUploadController::class, 'index']);
-    Route::post('/upload/create', [FileUploadController::class, 'store']);
+    Route::get('upload', [FileUploadController::class, 'index']);
+    Route::post('upload/create', [FileUploadController::class, 'store'])->name('upload.create');
+
     
-    Route::get('/activity', [ActivityLogController::class, 'index']);
+    Route::get('activity', [ActivityLogController::class, 'index']);
     
-    Route::get('/profile', [ProfileController::class, 'index']);
-    Route::put('/profile/edit', [ProfileController::class, 'update']);
+    Route::get('profile', [ProfileController::class, 'index']);
+    Route::put('profile/edit', [ProfileController::class, 'update']);
 });
