@@ -36,7 +36,7 @@ class ActivityLogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ActivityLog $activityLog)
+    public function show(string $id)
     {
         //
     }
@@ -44,7 +44,7 @@ class ActivityLogController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ActivityLog $activityLog)
+    public function edit(string $id)
     {
         //
     }
@@ -52,7 +52,7 @@ class ActivityLogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ActivityLog $activityLog)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -60,7 +60,7 @@ class ActivityLogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ActivityLog $activityLog)
+    public function destroy(string $id)
     {
         //
     }

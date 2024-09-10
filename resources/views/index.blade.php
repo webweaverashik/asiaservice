@@ -73,18 +73,17 @@
                       <td class="d-none">{{ \Carbon\Carbon::parse($report->created_at)->format('d-m-Y') }}</td>
                       <td>
                         
-                        <form action="{{ url('') }}" method="post">
-                          @csrf
-                          @method('PUT')
-                          <a href="{{ $report->file_url }}" target="_blank" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Download pinbatch">
+                        <form>
+                          <a href="{{ $report->file_url }}" target="_blank" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Download CSV">
                             <i class="fas fa-file-csv"></i>
                           </a>
                           <a href="{{ $report->pdf_url }}" target="_blank" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Download PDF">
                             <i class="fas fa-file-pdf"></i>
                           </a>
-                            <button type="submit" class="btn btn-outline-danger" title="Remove .csv file" name="csv_remover" id="csv_remover">
-                              <i class="fas fa-trash-alt"></i>
-                            </button>
+                          <a href="{{ url('file/' . $report->id . '/delete') }}" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Delete PDF">
+                            <i class="fas fa-trash-alt"></i>
+                          </a>
+                            
                           </form>
                       </td>
                     </tr>

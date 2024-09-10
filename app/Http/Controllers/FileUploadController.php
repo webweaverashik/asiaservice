@@ -143,7 +143,7 @@ class FileUploadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(FileUpload $fileUpload)
+    public function show(string $id)
     {
         //
     }
@@ -151,7 +151,7 @@ class FileUploadController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FileUpload $fileUpload)
+    public function edit(string $id)
     {
         //
     }
@@ -159,7 +159,7 @@ class FileUploadController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FileUpload $fileUpload)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -167,8 +167,12 @@ class FileUploadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FileUpload $fileUpload)
+    public function destroy(string $id)
     {
-        //
+        FileUpload::where('id', $id)->update([
+            'is_deleted' => 1,
+        ]);
+
+        return redirect()->back()->with('success', 'File has been deleted successfully');
     }
 }
