@@ -72,18 +72,21 @@
                       <td>{{ \Carbon\Carbon::parse($report->created_at)->format('d-M-Y, h:i:s A') }}</td>
                       <td class="d-none">{{ \Carbon\Carbon::parse($report->created_at)->format('d-m-Y') }}</td>
                       <td>
-                        
-                        <form>
-                          <a href="{{ $report->file_url }}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Download CSV">
-                            <i class="fas fa-file-csv text-lg"></i>
-                          </a>
-                          <a href="{{ url('file/' . $report->id . '/view') }}" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Download PDF">
-                            <i class="fas fa-file-pdf text-lg"></i>
-                          </a>
-                          <a href="{{ url('file/' . $report->id . '/delete') }}" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fas fa-trash text-lg"></i>
-                          </a>
+                        @if ($report->is_deleted != 1) 
+                          <form>
+                            <a href="{{ $report->file_url }}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Download CSV">
+                              <i class="fas fa-file-csv text-lg"></i>
+                            </a>
+                            <a href="{{ url('file/' . $report->id . '/view') }}" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Download PDF">
+                              <i class="fas fa-file-pdf text-lg"></i>
+                            </a>
+                            <a href="{{ url('file/' . $report->id . '/delete') }}" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Delete" onclick="return confirmDelete()">
+                              <i class="fas fa-trash text-lg"></i>
+                            </a>
                           </form>
+                        @else 
+                          <span class="text-muted">File Deleted</span>
+                        @endif
                       </td>
                     </tr>
 
@@ -125,6 +128,10 @@
 
 <script>
   document.getElementById("dashboard_menu").className += " active";
+
+  function confirmDelete() {
+    return confirm('Are you sure you want to delete this? Once deleted, it cannot be retrieved.');
+  }
 </script>
 
 
