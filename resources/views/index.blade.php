@@ -80,7 +80,7 @@
                           <a href="{{ url('file/' . $report->id . '/view') }}" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Download PDF">
                             <i class="fas fa-file-pdf text-lg"></i>
                           </a>
-                          <a href="{{ url('file/' . $report->id . '/delete') }}" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Delete PDF">
+                          <a href="{{ url('file/' . $report->id . '/delete') }}" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Delete">
                             <i class="fas fa-trash text-lg"></i>
                           </a>
                           </form>
