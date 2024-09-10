@@ -13,6 +13,7 @@ class FileUpload extends Model
         'reference_key',
         'csv_name',
         'file_url',
+        'pdf_url',
         'pin_count',
         'balance',
     ];

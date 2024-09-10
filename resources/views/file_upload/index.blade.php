@@ -36,7 +36,7 @@
                 <!-- /.card-header -->
   
                 <!-- form start -->
-                <form action="{{ url('upload/create') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('upload.create') }}" method="post" enctype="multipart/form-data">
                   @csrf
 
                   <div class="card-body">

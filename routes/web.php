@@ -33,12 +33,12 @@ Route::controller(AuthenticateController::class)->group(function () {
         Route::get('/', function () {
             return redirect('dashboard');
         }); // to handle 404 redirect
-        Route::get('/dashboard', [DashboardController::class, 'index']);
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     });
 
     Route::get('upload', [FileUploadController::class, 'index']);
-    Route::post('upload/create', [FileUploadController::class, 'store'])->name('upload.create');
-
+    Route::post('upload', [FileUploadController::class, 'storeAndGeneratePDF'])->name('upload.create');
+    Route::get('/file/{id}/delete', [FileUploadController::class, 'destroy']);
     
     Route::get('activity', [ActivityLogController::class, 'index']);
     

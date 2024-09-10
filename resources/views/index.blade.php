@@ -70,16 +70,19 @@
                       <td>{{ $report->pin_count }}</td>
                       <td>{{ $report->balance }}</td>
                       <td>{{ \Carbon\Carbon::parse($report->created_at)->format('d-M-Y, h:i:s A') }}</td>
-                      <td class="d-none">{{ \Carbon\Carbon::parse($report->created_at)->format('Y-m-d') }}</td>
+                      <td class="d-none">{{ \Carbon\Carbon::parse($report->created_at)->format('d-m-Y') }}</td>
                       <td>
-                          <form action="pdf-gen.php" method="post">
-                            <input type="hidden" value="{{ $report['id'] }}" name="fileID"  class="d-none" readonly>
-                            <input type="hidden" value="{{ $report['file_url'] }}" name="fileURL"  class="d-none" readonly>
-                            <button type="submit" class="btn btn-outline-danger" name="btn_pdf_download" id="btn_pdf_download" title="Download .pdf">
-                              <i class="fas fa-file-pdf"></i>
-                            </button>
-
-                            <button type="submit" class="btn btn-outline-warning" title="Remove .csv file" name="csv_remover" id="csv_remover">
+                        
+                        <form action="{{ url('') }}" method="post">
+                          @csrf
+                          @method('PUT')
+                          <a href="{{ $report->file_url }}" target="_blank" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Download pinbatch">
+                            <i class="fas fa-file-csv"></i>
+                          </a>
+                          <a href="{{ $report->pdf_url }}" target="_blank" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Download PDF">
+                            <i class="fas fa-file-pdf"></i>
+                          </a>
+                            <button type="submit" class="btn btn-outline-danger" title="Remove .csv file" name="csv_remover" id="csv_remover">
                               <i class="fas fa-trash-alt"></i>
                             </button>
                           </form>
@@ -158,10 +161,10 @@
     $(document).ready(function() {
         // Create date inputs
         minDate = new DateTime($('#min'), {
-            format: 'yyyy-MM-DD'
+            format: 'DD-MM-yyyy'
         });
         maxDate = new DateTime($('#max'), {
-            format: 'yyyy-MM-DD'
+            format: 'DD-MM-yyyy'
         });
     
         // DataTables initialisation
