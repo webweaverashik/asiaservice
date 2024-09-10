@@ -42,7 +42,7 @@
                   <div class="card-body">
                     <div class="form-group">
                       <label for="pb_reference">Reference No.</label><span class="text-danger">*</span>
-                      <input type="text" class="form-control @error('pb_reference') border-danger @enderror" id="pb_reference" name="pb_reference" placeholder="Enter any reference no." required>
+                      <input type="text" class="form-control @error('pb_reference') border-danger @enderror" id="pb_reference" name="pb_reference" placeholder="Enter any reference no." required maxlength="20">
                       @error('pb_reference') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="form-group">

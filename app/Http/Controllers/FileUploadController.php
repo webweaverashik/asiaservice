@@ -95,21 +95,18 @@ class FileUploadController extends Controller
             // Return the data
             // return $pinBatches;
 
-            // Load the image URL
-            $rearImageUrl = asset('uploads/img/rear-image.jpg'); // Use asset URL for blade
-
             // Store information in the database (optional)
-            // FileUpload::create([
-            //     'reference_key' => $request->pb_reference,
-            //     'csv_name' => $file->getClientOriginalName(),
-            //     'file_url' => $path . $filename,
-            //     'pin_count' => $rowCount,
-            //     'balance' => $fourthColumnValue ?? null, // Use $fourthColumnValue only if it exists
-            // ]);
+            FileUpload::create([
+                'reference_key' => $request->pb_reference,
+                'csv_name' => $file->getClientOriginalName(),
+                'file_url' => $path . $filename,
+                'pin_count' => $rowCount,
+                'balance' => $fourthColumnValue ?? null, // Use $fourthColumnValue only if it exists
+            ]);
 
             $reference = $request->pb_reference;
             // Redirect to the page where the PDF will be generated with the data passed
-            return view('pdf.index', compact('pinBatches', 'rearImageUrl', 'reference'));
+            return view('pdf.index', compact('pinBatches', 'reference'));
         } else {
             return back()->with('warning', 'No file uploaded.');
         }

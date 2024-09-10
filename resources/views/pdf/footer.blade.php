@@ -16,11 +16,11 @@
                 pagebreak: {
                     mode: ['avoid-all', 'css', 'legacy']
                 },
-                // filename: '{{ json_encode($reference) }}.pdf',
-                filename: 'File.pdf',
+                filename: '{{ $reference }}.pdf',
+                // filename: 'File.pdf',
                 image: {
                     type: 'jpeg',
-                    quality: 1
+                    quality: 0.85
                 },
                 html2canvas: {
                     scrollY: 0,
@@ -43,9 +43,9 @@
 
 
             // redirect to homepage after 5 seconds
-            // window.setTimeout(function () {
-            //     window.location.href = 'dashboard';
-            // }, 5000);
+            window.setTimeout(function () {
+                window.location.href = '{{ route('dashboard') }}';
+            }, 5000);
 
         });
     </script>
