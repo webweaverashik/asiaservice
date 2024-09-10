@@ -36,8 +36,6 @@ class FileUploadController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
-
     public function storeAndPrepareData(Request $request)
     {
         // Validate the form input
@@ -51,63 +49,71 @@ class FileUploadController extends Controller
                 'csv_file.required' => 'CSV file is required',
             ]
         );
-    
+
         // Check if the file is present
         if ($request->hasFile('csv_file')) {
             $file = $request->file('csv_file');
-            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . date('d_M_Y_h_i_s_A') . '.' .   $file->getClientOriginalExtension();
-    
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '_' . date('d_M_Y_h_i_s_A') . '.' . $file->getClientOriginalExtension();
+
             // Save the file in the 'public/uploads/csv/' folder
             $path = 'uploads/csv/' . date('M_Y') . '/';
             $file->move(public_path($path), $filename);
-    
+
             // Read the CSV file using the correct path
             $filePath = public_path($path . $filename);
             $csvData = array_map('str_getcsv', file($filePath));
-    
+
+            // Check the content of the parsed CSV for debugging
+            // Uncomment the line below to debug the CSV data
+            // dd($csvData);
+
             // Skip the first 16 rows and remove the last 1 row (blank lines)
             $csvData = array_slice($csvData, 16, -1);
-    
+
             // Get the row count
             $rowCount = count($csvData);
-    
-            // Extract the 4th column value
-            if ($rowCount > 0) {
-                $fourthColumnValue = $csvData[0][3]; // Get 4th column value
-            }
-    
+
             // Prepare PDF data
             $pinBatches = [];
             foreach ($csvData as $row) {
+                // Ensure that the 4th column exists in the row and handle edge cases
+                $balance = isset($row[3]) ? preg_replace('/\.00$/', '', $row[3]) : '0';
+
                 $pinBatches[] = [
-                    'serial_no' => $row[0],
-                    'pin' => trim($row[1], '="'),
-                    'pass' => trim($row[2], '="'),
-                    'balance' => rtrim($row[3], '.00'),
+                    'serial_no' => $row[0] ?? '',  // Handle empty serial no
+                    'pin' => isset($row[1]) ? trim($row[1], '="') : '',
+                    'pass' => isset($row[2]) ? trim($row[2], '="') : '',
+                    'balance' => $balance,  // Balance might be empty if the column isn't present
                     'pb_reference' => $request->pb_reference,
                 ];
             }
 
+            // Debugging: If you're still getting an empty "balance" value, use this:
+            // dd($pinBatches);
+
+            // Return the data
             // return $pinBatches;
-    
+
             // Load the image URL
             $rearImageUrl = asset('uploads/img/rear-image.jpg'); // Use asset URL for blade
-    
+
             // Store information in the database (optional)
             FileUpload::create([
                 'reference_key' => $request->pb_reference,
                 'csv_name' => $file->getClientOriginalName(),
                 'file_url' => $path . $filename,
                 'pin_count' => $rowCount,
-                'balance' => $fourthColumnValue,
+                'balance' => $fourthColumnValue ?? null, // Use $fourthColumnValue only if it exists
             ]);
-    
+
+            $reference = $request->pb_reference;
             // Redirect to the page where the PDF will be generated with the data passed
-            return view('pdf.index', compact('pinBatches', 'rearImageUrl'));
+            return view('pdf.index', compact('pinBatches', 'rearImageUrl', 'reference'));
         } else {
             return back()->with('warning', 'No file uploaded.');
         }
     }
+
      
 
     /**
