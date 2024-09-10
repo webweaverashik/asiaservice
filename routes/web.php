@@ -25,9 +25,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(AuthenticateController::class)->group(function () {
-    Route::get('/login', 'login')->middleware('alreadyLoggedIn');
-    Route::post('/login', 'loginUser')->name('login');
-    Route::get('/logout', 'logout');
+    Route::get('login', 'login')->middleware('alreadyLoggedIn');
+    Route::post('login', 'loginUser')->name('login');
+    Route::get('logout', 'logout');
 
     Route::middleware('isLoggedIn')->group(function () {
         Route::get('/', function () {
@@ -37,9 +37,13 @@ Route::controller(AuthenticateController::class)->group(function () {
     });
 
     Route::get('upload', [FileUploadController::class, 'index']);
-    Route::post('upload', [FileUploadController::class, 'storeAndGeneratePDF'])->name('upload.create');
-    Route::get('/file/{id}/delete', [FileUploadController::class, 'destroy']);
+    Route::post('upload', [FileUploadController::class, 'storeAndPrepareData'])->name('upload.create');
+    Route::get('file/{id}/delete', [FileUploadController::class, 'destroy']);
     
+    // Route::get('pdf', function(){
+    //     return view('pdf.index');
+    // });
+
     Route::get('activity', [ActivityLogController::class, 'index']);
     
     Route::get('profile', [ProfileController::class, 'index']);
