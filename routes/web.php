@@ -38,11 +38,9 @@ Route::controller(AuthenticateController::class)->group(function () {
 
     Route::get('upload', [FileUploadController::class, 'index']);
     Route::post('upload', [FileUploadController::class, 'storeAndPrepareData'])->name('upload.create');
+    Route::get('file/{id}/view', [FileUploadController::class, 'pdfGeneration']);
     Route::get('file/{id}/delete', [FileUploadController::class, 'destroy']);
     
-    // Route::get('pdf', function(){
-    //     return view('pdf.index');
-    // });
 
     Route::get('activity', [ActivityLogController::class, 'index']);
     

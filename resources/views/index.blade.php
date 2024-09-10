@@ -74,16 +74,15 @@
                       <td>
                         
                         <form>
-                          <a href="{{ $report->file_url }}" target="_blank" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Download CSV">
+                          <a href="{{ $report->file_url }}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Download CSV">
                             <i class="fas fa-file-csv text-lg"></i>
                           </a>
-                          <a href="{{ $report->pdf_url }}" target="_blank" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Download PDF">
+                          <a href="{{ url('file/' . $report->id . '/view') }}" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Download PDF">
                             <i class="fas fa-file-pdf text-lg"></i>
                           </a>
                           <a href="{{ url('file/' . $report->id . '/delete') }}" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Delete PDF">
                             <i class="fas fa-trash text-lg"></i>
                           </a>
-                            
                           </form>
                       </td>
                     </tr>

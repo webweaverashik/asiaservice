@@ -101,7 +101,7 @@ class FileUploadController extends Controller
                 'csv_name' => $file->getClientOriginalName(),
                 'file_url' => $path . $filename,
                 'pin_count' => $rowCount,
-                'balance' => $fourthColumnValue ?? null, // Use $fourthColumnValue only if it exists
+                'balance' => $pinBatches[0]['balance'], // Store a sample balance or handle this as needed
             ]);
 
             $reference = $request->pb_reference;
@@ -117,8 +117,47 @@ class FileUploadController extends Controller
     /**
      * Generating PDF of the print file
      */
-    public function pdfGeneration()
+    public function pdfGeneration(string $id)
     {
+        $fileInDB = FileUpload::where('id', $id)->first();
+
+        if ($fileInDB) {
+
+            $csvData = array_map('str_getcsv', file($fileInDB->file_url));
+
+            // Check the content of the parsed CSV for debugging
+            // Uncomment the line below to debug the CSV data
+            // dd($csvData);
+
+            // Skip the first 16 rows and remove the last 1 row (blank lines)
+            $csvData = array_slice($csvData, 16, -1);
+
+            // Get the row count
+            $rowCount = count($csvData);
+
+            // Prepare PDF data
+            $pinBatches = [];
+            foreach ($csvData as $row) {
+                // Ensure that the 4th column exists in the row and handle edge cases
+                $balance = isset($row[3]) ? preg_replace('/\.00$/', '', $row[3]) : '0';
+
+                $pinBatches[] = [
+                    'serial_no' => $row[0] ?? '',  // Handle empty serial no
+                    'pin' => isset($row[1]) ? trim($row[1], '="') : '',
+                    'pass' => isset($row[2]) ? trim($row[2], '="') : '',
+                    'balance' => $balance,  // Balance might be empty if the column isn't present
+                    'pb_reference' => $fileInDB->reference_key,
+                ];
+            }
+
+            $reference = $fileInDB->reference_key;
+
+            // Redirect to the page where the PDF will be generated with the data passed
+            return view('pdf.index', compact('pinBatches', 'reference'));
+        } else {
+            return back()->with('warning', 'CSV File Missing');
+        }
+
     }
 
     /**
