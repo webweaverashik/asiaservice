@@ -41,11 +41,12 @@ class FileUploadController extends Controller
         // Validate the form input
         $request->validate(
             [
-                'pb_reference' => 'required|string',
+                'pb_reference' => 'required|string|max:20',
                 'csv_file' => 'required|mimes:csv,txt|max:200', // CSV or plain text validation
             ],
             [
                 'pb_reference.required' => 'Reference no. is required',
+                'pb_reference.max' => 'Max 20 characters supported',
                 'csv_file.required' => 'CSV file is required',
             ]
         );
@@ -98,13 +99,13 @@ class FileUploadController extends Controller
             $rearImageUrl = asset('uploads/img/rear-image.jpg'); // Use asset URL for blade
 
             // Store information in the database (optional)
-            FileUpload::create([
-                'reference_key' => $request->pb_reference,
-                'csv_name' => $file->getClientOriginalName(),
-                'file_url' => $path . $filename,
-                'pin_count' => $rowCount,
-                'balance' => $fourthColumnValue ?? null, // Use $fourthColumnValue only if it exists
-            ]);
+            // FileUpload::create([
+            //     'reference_key' => $request->pb_reference,
+            //     'csv_name' => $file->getClientOriginalName(),
+            //     'file_url' => $path . $filename,
+            //     'pin_count' => $rowCount,
+            //     'balance' => $fourthColumnValue ?? null, // Use $fourthColumnValue only if it exists
+            // ]);
 
             $reference = $request->pb_reference;
             // Redirect to the page where the PDF will be generated with the data passed

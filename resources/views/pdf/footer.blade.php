@@ -16,7 +16,8 @@
                 pagebreak: {
                     mode: ['avoid-all', 'css', 'legacy']
                 },
-                filename: '{{ json_encode($reference) }}.pdf',
+                // filename: '{{ json_encode($reference) }}.pdf',
+                filename: 'File.pdf',
                 image: {
                     type: 'jpeg',
                     quality: 1
@@ -36,7 +37,6 @@
                 }
             };
 
-            console.log(filename);
 
             // New Promise-based usage:
             html2pdf().set(opt).from(print_element).save();
