@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="{{ url('dashboard') }}" class="brand-link">
       <img src="{{ asset('assets/img/logo.png') }}" alt="AsiaStar" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light font-weight-bold" >Asia Star</span>
+      <span class="brand-text font-weight-light font-weight-bold">Asia Star</span>
     </a>
 
     <!-- Sidebar -->

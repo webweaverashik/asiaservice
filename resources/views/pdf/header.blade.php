@@ -12,6 +12,8 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,700;1,400&display=swap">
+  <!-- JQuery UI -->
+  <link rel="stylesheet" href="{{ asset('plugins/jquery-ui/jquery-ui.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
   <!-- Our Custom CSS -->

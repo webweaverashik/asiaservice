@@ -184,4 +184,4 @@
     })
   </script>
 @endif
-@endsection'
+@endsection

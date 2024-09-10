@@ -31,19 +31,20 @@ Route::controller(AuthenticateController::class)->group(function () {
 
     Route::middleware('isLoggedIn')->group(function () {
         Route::get('/', function () {
-            return redirect('dashboard');
+            return redirect('dashboard')->with('warning', 'Already logged in');
         }); // to handle 404 redirect
+
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+        Route::get('upload', [FileUploadController::class, 'index']);
+        Route::post('upload', [FileUploadController::class, 'storeAndPrepareData'])->name('upload.create');
+        Route::get('file/{id}/view', [FileUploadController::class, 'pdfGeneration']);
+        Route::get('file/{id}/delete', [FileUploadController::class, 'destroy']);
+        
+
+        Route::get('activity', [ActivityLogController::class, 'index']);
+        
+        Route::get('profile', [ProfileController::class, 'index']);
+        Route::put('profile/edit', [ProfileController::class, 'update']);
     });
-
-    Route::get('upload', [FileUploadController::class, 'index']);
-    Route::post('upload', [FileUploadController::class, 'storeAndPrepareData'])->name('upload.create');
-    Route::get('file/{id}/view', [FileUploadController::class, 'pdfGeneration']);
-    Route::get('file/{id}/delete', [FileUploadController::class, 'destroy']);
-    
-
-    Route::get('activity', [ActivityLogController::class, 'index']);
-    
-    Route::get('profile', [ProfileController::class, 'index']);
-    Route::put('profile/edit', [ProfileController::class, 'update']);
 });
