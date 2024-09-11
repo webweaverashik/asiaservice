@@ -16,8 +16,7 @@ class AuthCheck
     public function handle(Request $request, Closure $next): Response
     {
         if (! Session()->has('loginId')) {
-            // return redirect('login')->with('fail', 'অনুগ্রহ করে আগে লগইন করুন।');
-            return redirect('login');
+            return redirect('login')->with('fail', 'You are not logged in.');
         }
 
         return $next($request);
