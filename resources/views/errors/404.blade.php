@@ -26,6 +26,7 @@
             background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
             height: 500px;
             background-position: center;
+            background-size: contain;
         }
 
 
@@ -60,7 +61,6 @@
                     <div class="col-sm-10 col-sm-offset-1  text-center">
                         <div class="four_zero_four_bg">
                             <h1 class="text-center ">Oops!</h1>
-
                         </div>
 
                         <div class="contant_box_404">

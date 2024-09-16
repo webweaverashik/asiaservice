@@ -11,7 +11,7 @@
                 var print_element = document.getElementById('print_element');
         
                 var opt = {
-                    margin: [0.2, 0.15, 0.13, 0.3], // [top, left, bottom, right]
+                    margin: [0.1, 0, 0.1, 0.15], // [top, left, bottom, right]
                     pagebreak: {
                         mode: ['avoid-all', 'css', 'legacy']
                     },
@@ -24,7 +24,7 @@
                         scrollY: 0,
                         scrollX: 0,
                         dpi: 600,
-                        scale: 3,
+                        scale: 2.5,
                         letterRendering: true,
                         useCORS: true
                     },
@@ -42,7 +42,7 @@
                     // redirect to homepage after 5 seconds
                     window.setTimeout(function () {
                         window.location.href = '{{ route('dashboard') }}';
-                    }, 3000);
+                    }, 5000);
                 }, 2000); // Adjust the delay time as needed
         
             });
