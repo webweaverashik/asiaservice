@@ -19,6 +19,6 @@
   <!-- Our Custom CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed d-flex justify-content-center align-items-center" id="print_element">
 <!-- Content Wrapper contains whole page content-->
 <div class="wrapper">

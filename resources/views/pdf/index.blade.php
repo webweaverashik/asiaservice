@@ -1,6 +1,6 @@
 @include('pdf.header')
 
-    <div class="container-fluid text-center" id="print_element" style="font-size: 14px;">
+    <div class="container-fluid text-center"  style="font-size: 14px;">
         <div class="row align-items-center align-middle" style="padding: 10px 0;">
 
             @php
