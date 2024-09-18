@@ -37,10 +37,14 @@
                   <input type="text" class="text-center" placeholder="Starting Date" id="min" readonly>
                   <span id="min"></span>
                   <div class="input-group-prepend input-group-append">
-                    <span class="input-group-text">To</span>
+                      <span class="input-group-text">To</span>
                   </div>
                   <input type="text" class="text-center" placeholder="Ending Date" id="max" readonly>
+                  <button id="reset" class="btn btn-outline-primary ml-2">
+                    Reset <i class="fas fa-sync-alt"></i>
+                  </button>
                 </div>
+              
 
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -138,21 +142,21 @@
   
     // Custom filtering function which will search data in column four between two values
     $.fn.dataTable.ext.search.push(
-        function( settings, data, dataIndex ) {
+        function(settings, data, dataIndex) {
             let min = moment($('#min').val()).isValid() ?
-                new Date( $('#min').val() ).setUTCHours(0,0,0,0) :
+                new Date($('#min').val()).setUTCHours(0,0,0,0) :
                 null;
             
             let max = moment($('#max').val()).isValid() ?
-                new Date( $('#max').val() ).setUTCHours(23,59,59,999):
+                new Date($('#max').val()).setUTCHours(23,59,59,999) :
                 null;
-            var date = new Date( data[6] );
+            var date = new Date(data[6]);
 
             if (
-                ( min === null && max === null ) ||
-                ( min === null && date <= max )  ||
-                ( min <= date  && max === null ) ||
-                ( min <= date  && date <= max )
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
             ) {
                 return true;
             }
@@ -171,18 +175,23 @@
     
         // DataTables initialisation
         var table = $('#printHistoryTable').DataTable({
-          "responsive": true, "lengthChange": true, "autoWidth": false,
+            "responsive": true, "lengthChange": true, "autoWidth": false,
         });
 
-
         // Refilter the table
-        $('#min, #max').on('change', function () {
+        $('#min, #max').on('change', function() {
+            table.draw();
+        });
+
+        // Reset button functionality
+        $('#reset').on('click', function() {
+            $('#min').val('');
+            $('#max').val('');
             table.draw();
         });
     });
-
-    
   </script>
+
 
 
 @if($message = session('success'))
