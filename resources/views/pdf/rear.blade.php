@@ -3,7 +3,7 @@
     @php
         $balance = $pinBatches[1]['balance'];
         $isFloat = is_float($balance) || (floor($balance) != $balance);
-        $rightValue = $balance < 10 ? '18px' : '16px';
+        $rightValue = $balance < 10 ? '20px' : '17px';
         $fontSize = $isFloat ? '9px' : '13px';
     @endphp
 
