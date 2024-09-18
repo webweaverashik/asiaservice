@@ -50,11 +50,10 @@
                         <th>SL.</th>
                         <th>Reference</th>
                         <th>File Name</th>
-                        <th class="d-none">File URL</th>
                         <th>Total Pin</th>
                         <th>Balance ($)</th>
                         <th>Upload Time</th>
-                        <th class="d-none">Time Filter</th>
+                        <th class="d-none">Date Filter</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -66,11 +65,10 @@
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $report->reference_key }}</td>
                       <td>{{ $report->csv_name }}</td>
-                      <td class="d-none">{{ $report->file_url }}</td>
                       <td>{{ $report->pin_count }}</td>
                       <td>{{ $report->balance }}</td>
                       <td>{{ \Carbon\Carbon::parse($report->created_at)->format('d-M-Y, h:i:s A') }}</td>
-                      <td class="d-none">{{ \Carbon\Carbon::parse($report->created_at)->format('d-m-Y') }}</td>
+                      <td class="d-none">{{ \Carbon\Carbon::parse($report->created_at)->format('Y-m-d') }}</td>
                       <td>
                         @if ($report->is_deleted != 1) 
                           <form>
@@ -98,11 +96,10 @@
                         <th>SL.</th>
                         <th>Reference</th>
                         <th>File Name</th>
-                        <th class="d-none">File URL</th>
                         <th>Total Pin</th>
                         <th>Balance ($)</th>
                         <th>Upload Time</th>
-                        <th class="d-none">Time Filter</th>
+                        <th class="d-none">Date Filter</th>
                         <th>Action</th>
                       </tr>
                     </tfoot>
@@ -149,7 +146,7 @@
             let max = moment($('#max').val()).isValid() ?
                 new Date( $('#max').val() ).setUTCHours(23,59,59,999):
                 null;
-            var date = new Date( data[7] );
+            var date = new Date( data[6] );
 
             if (
                 ( min === null && max === null ) ||
@@ -166,10 +163,10 @@
     $(document).ready(function() {
         // Create date inputs
         minDate = new DateTime($('#min'), {
-            format: 'DD-MM-yyyy'
+            format: 'yyyy-MM-DD'
         });
         maxDate = new DateTime($('#max'), {
-            format: 'DD-MM-yyyy'
+            format: 'yyyy-MM-DD'
         });
     
         // DataTables initialisation
