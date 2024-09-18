@@ -172,7 +172,6 @@
         // DataTables initialisation
         var table = $('#printHistoryTable').DataTable({
           "responsive": true, "lengthChange": true, "autoWidth": false,
-          // order: [6, 'desc'],
         });
 
 
