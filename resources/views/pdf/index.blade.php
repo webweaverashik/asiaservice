@@ -1,6 +1,6 @@
 @include('pdf.header')
 
-    <div class="container-fluid text-center"  style="font-size: 14px;">
+    <div class="container-fluid text-center" id="print_element" style="font-size: 14px;">
         <div class="row align-items-center align-middle" style="padding: 10px 0;">
 
             @php
@@ -39,7 +39,7 @@
             @if ($left_loop != 0)  
                 <div class='col-md-12'></div>
                 <div class="html2pdf__page-break"></div>
-                <div class='col-md-12' style='padding: 8px 0 0 0;'></div>
+                <div class='col-md-12' style='padding: 5px 0 0 0;'></div>
 
                 @for ($j=1; $j < $left_loop ; $j++)
                     @include('pdf.rear') {{-- printing back page --}}
