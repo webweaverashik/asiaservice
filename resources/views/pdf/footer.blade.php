@@ -14,8 +14,8 @@
                     margin:         [0.2, 0.15, 0.13, 0.25], // [top, left, bottom, right]
                     pagebreak:      { mode: ['avoid-all', 'css', 'legacy']},
                     filename:       '{{ $reference }}.pdf',
-                    image:          { type: 'jpeg', quality: 1 },
-                    html2canvas:    { scrollY: 0, scrollX: 0, dpi: 600, scale: 3, letterRendering: true, useCORS: true },
+                    image:          { type: 'jpeg', quality: 1.2 },
+                    html2canvas:    { scrollY: 0, scrollX: 0, dpi: 1200, scale: 4, letterRendering: true, useCORS: true },
                     jsPDF:          { unit: 'in', format: 'a4', orientation: 'portrait' }
                 };
         
