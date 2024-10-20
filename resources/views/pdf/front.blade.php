@@ -6,7 +6,7 @@
       <div class="col-6">PIN</div>
       <div class="col-6">PASS</div>
     </div>
-    <div class="row border border-dark rounded-bottom text-secondary" style="font-family: 'Monaco', monospace;">
+    <div class="row border border-dark rounded-bottom text-body" style="font-family: 'Monaco', monospace;">
       <div class="col-6">{{ $pinBatches[$loop-1]['pin'] }}</div>
       <div class="col-6">{{ $pinBatches[$loop-1]['pass'] }}</div>
     </div>

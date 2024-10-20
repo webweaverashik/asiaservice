@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {     
-        $results = FileUpload::orderBy('created_at', 'desc')->get();
+        $results = FileUpload::where('is_deleted', 0)->orderBy('created_at', 'desc')->get();
 
         return view('index', compact('results'));
     }
